@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseller Gaming — Share & Download</title>
+  <style>
+    /*---------- 1. VARIABEL WARNA ----------*/
+    :root{
+      --bg:#0f0c29;
+      --bg2:#302b63;
+      --bg3:#24243e;
+      --card:rgba(255,255,255,.05);
+      --line:rgba(255,255,255,.1);
+      --accent:#00f2fe;
+      --accent2:#4facfe;
+      --text:#fff;
+      --sub:rgba(255,255,255,.65);
+    }
+    [data-theme="light"]{
+      --bg:#f2f5f7;
+      --bg2:#e0e7ff;
+      --bg3:#c7d2fe;
+      --card:rgba(255,255,255,.6);
+      --line:rgba(0,0,0,.08);
+      --accent:#4f46e5;
+      --accent2:#7c3aed;
+      --text:#111827;
+      --sub:rgba(0,0,0,.65);
+    }
+
+    /*---------- 2. RESET & TYPO ----------*/
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;}
+    html{scroll-behavior:smooth;}
+    body{
+      min-height:100vh;
+      background:linear-gradient(135deg,var(--bg),var(--bg2),var(--bg3));
+      color:var(--text);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:2rem 1rem;
+      transition:background .4s;
+    }
+    h1{font-size:2.6rem;font-weight:800;margin-bottom:.25rem;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .subtitle{font-size:1rem;color:var(--sub);margin-bottom:2.5rem;}
+
+    /*---------- 3. TOP BAR ----------*/
+    .top-bar{
+      width:100%;max-width:720px;
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:2rem;
+    }
+    .socials{display:flex;gap:.75rem;}
+    .socials a{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:38px;height:38px;border-radius:50%;
+      background:var(--card);border:1px solid var(--line);
+      color:var(--text);text-decoration:none;
+      transition:transform .2s,background .2s;
+    }
+    .socials a:hover{transform:translateY(-3px);background:var(--accent);color:#fff;}
+    .theme-toggle{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:38px;height:38px;border-radius:50%;
+      background:var(--card);border:1px solid var(--line);
+      cursor:pointer;transition:transform .2s;
+    }
+    .theme-toggle:hover{transform:scale(1.15);}
+    .theme-toggle svg{width:22px;height:22px;stroke:var(--text);}
+
+    /*---------- 4. HERO ----------*/
+    .hero{text-align:center;margin-bottom:2.5rem;}
+    .btn-group{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1.5rem;}
+    .btn-top{
+      padding:.85rem 1.8rem;border-radius:14px;font-weight:600;
+      text-decoration:none;color:#fff;
+      background:linear-gradient(45deg,var(--accent),var(--accent2));
+      box-shadow:0 8px 20px -6px var(--accent);
+      transition:transform .2s,box-shadow .2s;
+    }
+    .btn-top:hover{transform:translateY(-4px);box-shadow:0 12px 25px -6px var(--accent);}
+    .btn-top.donate{background:linear-gradient(45deg,#f857a6,#ff5858);box-shadow:0 8px 20px -6px #ff5858;}
+    .btn-top.donate:hover{box-shadow:0 12px 25px -6px #ff5858;}
+
+    /*---------- 5. NOTICE ----------*/
+    .notice{
+      max-width:640px;
+      background:var(--card);backdrop-filter:blur(12px);
+      border:1px solid var(--line);border-radius:16px;
+      padding:1.2rem 1.8rem;margin-bottom:2.5rem;
+      text-align:center;font-size:.95rem;line-height:1.6;
+    }
+    .notice b{color:var(--accent);}
+    .notice span{color:#ff4d4d;}
+
+    /*---------- 6. SEARCH ----------*/
+    .search-box{
+      width:100%;max-width:640px;margin-bottom:2.5rem;
+      position:relative;
+    }
+    .search-box input{
+      width:100%;padding:1rem 3rem 1rem 1.2rem;border-radius:14px;
+      border:1px solid var(--line);background:var(--card);color:var(--text);
+      font-size:1rem;transition:box-shadow .2s;
+    }
+    .search-box input:focus{outline:none;box-shadow:0 0 0 3px var(--accent);}
+    .search-box svg{
+      position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);
+      width:20px;height:20px;stroke:var(--sub);
+    }
+
+    /*---------- 7. CARD LIST ----------*/
+    .list{width:100%;max-width:720px;display:flex;flex-direction:column;gap:1.25rem;}
+    .card{
+      background:var(--card);backdrop-filter:blur(10px);
+      border:1px solid var(--line);border-radius:16px;
+      padding:1.5rem;display:flex;flex-direction:column;
+      transition:transform .2s,box-shadow .2s;
+    }
+    .card:hover{transform:translateY(-4px);box-shadow:0 12px 30px -10px rgba(0,0,0,.25);}
+    .card-title{font-size:1.1rem;font-weight:700;margin-bottom:.35rem;}
+    .card-desc{font-size:.9rem;color:var(--sub);margin-bottom:1rem;}
+    .card-actions{display:flex;gap:.6rem;}
+    .btn{
+      flex:1;text-align:center;padding:.55rem 0;border-radius:10px;
+      font-size:.85rem;font-weight:600;text-decoration:none;color:#fff;
+      background:var(--accent);transition:filter .2s;
+    }
+    .btn:hover{filter:brightness(1.15);}
+    .btn.secondary{background:var(--line);color:var(--text);}
+    .category-title{font-size:1.25rem;font-weight:700;margin-bottom:.75rem;}
+
+    /*---------- 8. FOOTER ----------*/
+    footer{margin-top:auto;padding-top:3rem;font-size:.8rem;color:var(--sub);}
+
+    /*---------- 9. RESPONSIVE ----------*/
+    @media(max-width:600px){
+      h1{font-size:2.2rem;}
+      .btn-group{flex-direction:column;width:100%;}
+      .btn-top{width:100%;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- SVG ICONS -->
+<svg style="display:none">
+  <symbol id="icon-sun" viewBox="0 0 24 24"><g stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></g></symbol>
+  <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="socials">
+    <a href="https://t.me/your_telegram" target="_blank" aria-label="Telegram"><svg width="20" height="20" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.82-1.084.511l-3-2.21-1.446 1.394c-.14.14-.264.264-.538.264l.214-3.889 5.56-5.038c.24-.214-.053-.333-.373-.12l-6.889 4.32-2.97-.92c-.64-.2-.653-.64.133-.95l11.64-4.48c.54-.2.92.133.768.88z"/></svg></a>
+    <a href="https://www.tiktok.com/@your_tiktok" target="_blank" aria-label="TikTok"><svg width="20" height="20" fill="currentColor"><path d="M9 0v7.667c-1.008-.22-2.03-.318-3-.277C2.256 7.82 0 10.043 0 13c0 2.957 2.256 5.18 6 5.18 3.314 0 6-2.37 6-5.5V1.5A6.5 6.5 0 008.5 0H9z"/></svg></a>
+    <a href="https://www.instagram.com/your_ig" target="_blank" aria-label="Instagram"><svg width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.057 1.945.248 2.456.42.653.245 1.204.57 1.71.963.506.394.956.844 1.35 1.35.394.506.72 1.057.963 1.71.172.511.363 1.286.42 2.456.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.057 1.17-.248 1.945-.42 2.456-.245.653-.57 1.204-.963 1.71-.394.506-.844.956-1.35 1.35-.506.394-1.057.72-1.71.963-.511.172-1.286.363-2.456.42-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.057-1.945-.248-2.456-.42-.653-.245-1.204-.57-1.71-.963-.506-.394-.956-.844-1.35-1.35-.394-.506-.72-1.057-.963-1.71-.172-.511-.363-1.286-.42-2.456C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.85c.057-1.17.248-1.945.42-2.456.245-.653.57-1.204.963-1.71.394-.506.844-.956 1.35-1.35.506-.394 1.057-.72 1.71-.963.511-.172 1.286-.363 2.456-.42C8.416 2.175 8.796 2.163 12 2.163zm0 1.802C8.87 3.965 8.508 3.977 7.233 4.032c-1.15.056-1.874.24-2.37.405-.603.223-1.08.52-1.55.993-.47.472-.77.948-.993 1.55-.165.496-.349 1.22-.405 2.37-.055 1.275-.067 1.637-.067 4.767s.012 3.492.067 4.767c.056 1.15.24 1.874.405 2.37.223.603.52 1.08.993 1.55.472.47.948.77 1.55.993.496.165 1.22.349 2.37.405 1.275.055 1.637.067 4.767.067s3.492-.012 4.767-.067c1.15-.056 1.874-.24 2.37-.405.603-.223 1.08-.52 1.55-.993.47-.472.77-.948.993-1.55.165-.496.349-1.22.405-2.37.055-1.275.067-1.637.067-4.767s-.012-3.492-.067-4.767c-.056-1.15-.24-1.874-.405-2.37-.223-.603-.52-1.08-.993-1.55-.472-.47-.948-.77-1.55-.993-.496-.165-1.22-.349-2.37-.405C15.492 3.977 15.13 3.965 12 3.965zm0 2.43c-2.43 0-4.392 1.962-4.392 4.392s1.962 4.392 4.392 4.392 4.392-1.962 4.392-4.392S14.43 6.395 12 6.395zm0 7.183c-1.54 0-2.791-1.251-2.791-2.791s1.251-2.791 2.791-2.791 2.791 1.251 2.791 2.791-1.251 2.791-2.791 2.791zm5.507-7.73c-.53 0-.96.43-.96.96s.43.96.96.96.96-.43.96-.96-.43-.96-.96-.96z"/></svg></a>
+    <a href="https://wa.me/your_wa" target="_blank" aria-label="WhatsApp"><svg width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.76-1.653-2.059-.173-.297-.018-.456.13-.604.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.67-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.48 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.213 5.077 4.496.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.289.173-1.414-.074-.124-.272-.198-.57-.347zM12.006 2.146c-5.52 0-9.999 4.48-9.999 9.999 0 1.745.447 3.398 1.318 4.849L2.2 21.85l5.234-1.374c1.398.84 3.03 1.329 4.772 1.329 5.52 0 9.999-4.48 9.999-9.999 0-5.52-4.48-9.999-9.999-9.999zm0 18.328c-1.603 0-3.11-.502-4.373-1.373l-.314-.187-3.272.858.875-3.188-.206-.326c-.934-1.485-1.456-3.225-1.456-5.067 0-4.62 3.758-8.378 8.378-8.378 4.62 0 8.378 3.758 8.378 8.378 0 4.62-3.758 8.378-8.378 8.378z"/></svg></a>
+  </div>
+  <div class="theme-toggle" id="themeToggle" aria-label="Toggle tema"><svg><use href="#icon-moon"></use></svg></div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Reseller Gaming</h1>
+  <p class="subtitle">Kumpulan code website & script bot — gratis & aman</p>
+  <div class="btn-group">
+    <a class="btn-top" href="#website">Code Website</a>
+    <a class="btn-top" href="#bot">Script Bot</a>
+    <a class="btn-top donate" href="https://saweria.co/your_saweria" target="_blank">☕ Donate</a>
+  </div>
+</div>
+
+<!-- NOTICE -->
+<div class="notice">Semua file di bawah berasal dari <b>Reseller Gaming</b>. Selain itu <span>SCAM / Penipuan ❌</span></div>
+
+<!-- SEARCH -->
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="Cari file...">
+  <svg><use href="#icon-search"></use></svg>
+</div>
+
+<!-- LIST -->
+<div class="list" id="fileList">
+  <!-- Kategori Website -->
+  <div class="category" id="website">
+    <div class="category-title">Website</div>
+    <div class="card" data-keywords="payment lagu html css">
+      <div class="card-title">Website Cek Akun Digital Ocean</div>
+      <div class="card-desc">r"Souce Code Website Cek akun digital ocean Denga modal apikey akun tersebut dan memakai database Localstorage dan aman dari public dan pencurian apikey.</div>
+      <div class="card-actions">
+        <a href="web/cekakundo.zip" download class="btn">⬇️ Download</a>
+        <button class="btn secondary" onclick="copyLink('web/cekakundo.zip')">🔗 Salin Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kategori Bot -->
+  <div class="category" id="bot">
+    <div class="category-title">Bot</div>
+    <div class="card" data-keywords="telegram limit spam">
+      <div class="card-title">Bot Telegram Limit v1 (ZIP)</div>
+      <div class="card-desc">Bot limit-chat: JS + JSON, otomatis blokir user yang spam.</div>
+      <div class="card-actions">
+        <a href="file/bot-limit-v1.zip" download class="btn">⬇️ Download</a>
+        <button class="btn secondary" onclick="copyLink('file/bot-limit-v1.zip')">🔗 Salin Link</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>© <span id="year"></span> Reseller Gaming — DokumenShare</footer>
+
+<!-- SCRIPT -->
+<script>
+  /*----- Tahun -----*/
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /*----- Copy Link -----*/
+  function copyLink(path){
+    const url = location.origin + '/' + path;
+    navigator.clipboard.writeText(url)
+      .then(() => alert('Link tersalin!'))
+      .catch(() => prompt('Salin manual:', url));
+  }
+
+  /*----- Search Live -----*/
+  const searchInput = document.getElementById('searchInput');
+  const cards = [...document.querySelectorAll('.card')];
+  searchInput.addEventListener('input', e => {
+    const key = e.target.value.toLowerCase();
+    cards.forEach(card => {
+      const txt = (card.dataset.keywords + ' ' + card.textContent).toLowerCase();
+      card.style.display = txt.includes(key) ? '' : 'none';
+    });
+  });
+
+  /*----- Tema Toggle -----*/
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+  const icon = themeToggle.querySelector('use');
+  const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const saved = localStorage.getItem('theme');
+  let mode = saved || (preferDark ? 'dark' : 'light');
+  body.setAttribute('data-theme', mode);
+  icon.setAttribute('href', mode==='dark' ? '#icon-moon' : '#icon-sun');
+
+  themeToggle.addEventListener('click', () => {
+    mode = mode==='dark' ? 'light' : 'dark';
+    body.setAttribute('data-theme', mode);
+    icon.setAttribute('href', mode==='dark' ? '#icon-moon' : '#icon-sun');
+    localStorage.setItem('theme', mode);
+  });
+</script>
+</body>
+  </html>
